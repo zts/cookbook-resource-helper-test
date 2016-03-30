@@ -16,6 +16,9 @@ describe 'resource-helper-test::test_recipe' do
     it 'does not log the message' do
       expect(chef_run).not_to write_log "something must be done"
     end
+    it 'does log the second message' do
+      expect(chef_run).to write_log "nothing will be done"
+    end
   end
 
   context 'when the helper method is stubbed' do
@@ -26,6 +29,9 @@ describe 'resource-helper-test::test_recipe' do
 
     it 'does log the message' do
       expect(chef_run).to write_log "something must be done"
+    end
+    it 'does not log the second message' do
+      expect(chef_run).not_to write_log "nothing will be done"
     end
   end
 end
