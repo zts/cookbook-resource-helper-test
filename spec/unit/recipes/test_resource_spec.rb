@@ -8,7 +8,7 @@ require 'spec_helper'
 
 describe 'resource-helper-test::test_resource' do
   let(:chef_run) do
-    runner = ChefSpec::SoloRunner.new(:step_into => ['my_test_resource'])
+    runner = ChefSpec::SoloRunner.new(:step_into => ['my_test_resource', 'my_test_resource2'])
     runner.converge(described_recipe)
   end
 
@@ -18,6 +18,12 @@ describe 'resource-helper-test::test_resource' do
     end
     it 'does log the second message' do
       expect(chef_run).to write_log "nothing will be done"
+    end
+    it 'does not log the third message' do
+      expect(chef_run).not_to write_log "something else must be done"
+    end
+    it 'does log the fourth message' do
+      expect(chef_run).to write_log "nothing else will be done"
     end
   end
 
@@ -32,6 +38,12 @@ describe 'resource-helper-test::test_resource' do
     end
     it 'does not log the second message' do
       expect(chef_run).not_to write_log "nothing will be done"
+    end
+    it 'does log the third message' do
+      expect(chef_run).to write_log "something else must be done"
+    end
+    it 'does not log the fourth message' do
+      expect(chef_run).not_to write_log "nothing else will be done"
     end
   end
 end
