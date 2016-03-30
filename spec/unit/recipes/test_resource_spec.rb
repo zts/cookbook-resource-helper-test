@@ -29,7 +29,14 @@ describe 'resource-helper-test::test_resource' do
 
   context 'when the helper method is stubbed' do
     before do
+      # Filename "my_test_resource.rb"
+      # resource_name :my_test_resource
       allow_any_instance_of(Chef::Resource::ResourceHelperTestMyTestResource)
+        .to receive(:do_something?).and_return(true)
+
+      # Filename "another_test_resource.rb"
+      # resource_name :my_test_resource2
+      allow_any_instance_of(Chef::Resource::ResourceHelperTestAnotherTestResource)
         .to receive(:do_something?).and_return(true)
     end
 
